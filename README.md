@@ -1,6 +1,6 @@
 # Kaxi
 
-TODO: Write a gem description
+Kaxi adds a rake script to build your iOS Xcode project from the commmand line or using a CI tool such as Jenkins.
 
 ## Installation
 
