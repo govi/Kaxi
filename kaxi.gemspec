@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Kaxi is a library to compile your Xcode project easily from the command line with a script.
                         With that script is trivial to add your Xcode project to Jenkins using the companion Jenkins
                         plugin. }
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.summary       = %q{Kaxi. A script builder for Xcode}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
