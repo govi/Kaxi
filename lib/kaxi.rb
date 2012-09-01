@@ -1,5 +1,5 @@
 require "kaxi/version"
 
 module Kaxi
-  # Your code goes here...
+  autoload :Project,   'kaxi/project'
 end
