@@ -1,4 +1,5 @@
 require 'xcodeproj/project'
+require 'kaxi/kaxi_project'
 
 module Kaxi
 
@@ -7,7 +8,11 @@ module Kaxi
 			puts "xcode_project_path #{xcode_project_path}"
 			xcodeproj = Xcodeproj::Project.new xcode_project_path
 			puts "targets #{xcodeproj.targets}"
+			
+			xcode_project_targets = Array.new
 			xcodeproj.targets.each { |target| 
+				xcode_target = Hash.new
+				xcode_target['name'] = target.product_name
 
 				puts "#{target.product_name} "
 				target.build_phases.each { |phase|
@@ -15,8 +20,13 @@ module Kaxi
 				}
 				debug_settings = target.build_settings('Debug')
 				puts "debug settings #{debug_settings}"
+				xcode_project_targets.push xcode_target
 			}
-			xcodeproj
+			
+			xcode_project = KaxiProject.new
+			xcode_project.targets = xcode_project_targets
+			xcode_project.name = 'Test'
+			xcode_project
 		end	
 	end	
 
