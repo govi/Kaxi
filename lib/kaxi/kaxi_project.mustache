@@ -1,6 +1,32 @@
-Project {{name}}
 
-Targets 
-{{#targets}}
-	{{name}}
-{{/targets}}
+require 'date'
+require 'fileutils'
+
+
+task :default => 'ios:run'
+
+namespace :ios do
+  
+   
+  desc 'Deletes the compiled code.'
+  task :clean do
+    puts 'Cleaning previous builds'
+    FileUtils.rm_rf('build')
+    sh 'cd ./code/{{name}} && xcodebuild -alltargets clean'
+  end   
+  {{targets}}
+  desc 'Compiles the project using the Debug configuration.'
+  task :compile_{{name}} => [:analyze, :documentation] do
+    puts 'Compiling App in Debug scheme'
+    sh 'cd code/Teemo && xcodebuild -target {{name}} -sdk iphonesimulator -configuration Debug'
+  end  
+  
+  desc 'Compiles the project using the Release configuration.'
+  task :release_{{name}} => [:documentation, :compile_tests] do
+    puts 'Compiling app for Release'
+    sh 'cd ./code/Teemo && xcodebuild -target {{name}} -configuration Release'
+  end
+  {{/targets}}
+ 
+  
+  

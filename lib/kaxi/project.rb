@@ -25,7 +25,8 @@ module Kaxi
 			
 			xcode_project = KaxiProject.new
 			xcode_project.targets = xcode_project_targets
-			xcode_project.name = 'Test'
+			xcode_project.name = File.basename(xcode_project_path, '.xcodeproj')
+			puts "project name #{xcode_project.name}"			
 			xcode_project
 		end	
 	end	
