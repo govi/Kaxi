@@ -14,7 +14,7 @@ namespace :ios do
     FileUtils.rm_rf('build')
     sh 'cd ./code/{{name}} && xcodebuild -alltargets clean'
   end   
-  {{targets}}
+  {{#targets}}
   desc 'Compiles the project using the Debug configuration.'
   task :compile_{{name}} => [:analyze, :documentation] do
     puts 'Compiling App in Debug scheme'
