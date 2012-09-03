@@ -31,7 +31,14 @@ module Kaxi
 		end	
 
 		def find_xcodeproject_in_directory( directory_path )
-			
+			dir = Dir.new directory_path
+			file_xcodeproject = nil
+			dir.each do |filename|				
+				if File.extname(filename) == '.xcodeproj'
+					file_xcodeproject = filename
+				end
+			end
+			file_xcodeproject
 		end	
 	end	
 
