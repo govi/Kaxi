@@ -1,0 +1,45 @@
+
+require 'date'
+require 'fileutils'
+
+XCODEBUILD_PATH = '/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild'
+
+task :default => 'ios:run'
+
+namespace :ios do
+  
+
+  desc 'Deletes the compiled code.'
+  task :clean do
+    puts 'Cleaning previous builds'
+    FileUtils.rm_rf('build')
+    sh "cd ./code/TestXcodeProject && #{XCODEBUILD_PATH} -alltargets clean"
+  end   
+
+  desc 'Compiles the TestXcodeProject target using the Debug configuration.'
+  task :compile_TestXcodeProject => [:analyze, :documentation] do
+    puts 'Compiling App in Debug scheme'
+    sh "cd code/Teemo && #{XCODEBUILD_PATH} -target TestXcodeProject -sdk iphonesimulator -configuration Debug"
+  end  
+  
+
+  desc 'Compiles the TestXcodeProject target using the Release configuration.'
+  task :release_TestXcodeProject => [:documentation, :compile_tests] do
+    puts 'Compiling app for Release'
+    sh "cd ./code/Teemo && #{XCODEBUILD_PATH} -target TestXcodeProject -configuration Release"
+  end
+  desc 'Compiles the TestXcodeProjectTests target using the Debug configuration.'
+  task :compile_TestXcodeProjectTests => [:analyze, :documentation] do
+    puts 'Compiling App in Debug scheme'
+    sh "cd code/Teemo && #{XCODEBUILD_PATH} -target TestXcodeProjectTests -sdk iphonesimulator -configuration Debug"
+  end  
+  
+
+  desc 'Compiles the TestXcodeProjectTests target using the Release configuration.'
+  task :release_TestXcodeProjectTests => [:documentation, :compile_tests] do
+    puts 'Compiling app for Release'
+    sh "cd ./code/Teemo && #{XCODEBUILD_PATH} -target TestXcodeProjectTests -configuration Release"
+  end
+ 
+  
+  
