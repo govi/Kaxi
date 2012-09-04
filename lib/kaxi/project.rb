@@ -9,7 +9,7 @@ module Kaxi
 		def self.run
 			project = self.new
 			current_directory = File.absolute_path( '.')
-			xcode_project_path = find_xcodeproject_in_directory current_directory
+			xcode_project_path = project.find_xcodeproject_in_directory current_directory
 			if not xcode_project_path
 				puts "Run this command inside the same folder as your .xcodeproj file."
 			else
