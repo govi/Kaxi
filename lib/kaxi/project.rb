@@ -1,12 +1,22 @@
 require 'xcodeproj/project'
 require 'kaxi/kaxi_project'
+require 'kaxi/kaxi_script'
 
 module Kaxi
 
 	class Project
 
 		def self.run
-			puts "Current file #{File.absolute_path( '.' )}"
+			project = self.new
+			current_directory = File.absolute_path( '.')
+			xcode_project_path = find_xcodeproject_in_directory current_directory
+			if not xcode_project_path
+				puts "Run this command inside the same folder as your .xcodeproj file."
+			else
+				project_info = project.xcode_project_info xcode_project_path
+				script = Kaxi::KaxiScript.new
+				script.build_script_for( project_info, current_directory ) 	
+			end
 		end	
 
 		def xcode_project_info(xcode_project_path)
