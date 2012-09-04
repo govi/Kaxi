@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-
-
 describe Kaxi do
 	
 	it "should find the xcodeproj file in the directory" do
@@ -19,10 +17,7 @@ describe Kaxi do
 		project_info = project.xcode_project_info project_file_path
 		project_info.should_not be_nil
 		script = Kaxi::KaxiScript.new
-		script.build_script_for project_info
+		script.build_script_for( project_info, File.absolute_path( File.join( 'spec', 'fixtures' ) ) )	
 	end
-
-
-
 
 end

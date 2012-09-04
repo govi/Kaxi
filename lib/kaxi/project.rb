@@ -4,6 +4,11 @@ require 'kaxi/kaxi_project'
 module Kaxi
 
 	class Project
+
+		def self.run
+			puts "Current file #{File.absolute_path( '.' )}"
+		end	
+
 		def xcode_project_info(xcode_project_path)
 			puts "xcode_project_path #{xcode_project_path}"
 			xcodeproj = Xcodeproj::Project.new xcode_project_path
