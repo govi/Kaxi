@@ -4,7 +4,7 @@ require 'fileutils'
 
 XCODEBUILD_PATH = '/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild'
 
-task :default => 'ios:run'
+task :default => 'ios:compile_default_with_debug_config'
 
 namespace :ios do
   
@@ -15,16 +15,28 @@ namespace :ios do
     sh "cd ./code/{{name}} && #{XCODEBUILD_PATH} -alltargets clean"
   end   
 
+  desc 'Compiles the default target using the Debug configuration.'
+  task :compile_default_with_debug_config => [:clean] do
+    puts 'Compiling App in Debug scheme'
+    sh "cd code/Teemo && #{XCODEBUILD_PATH} -sdk iphonesimulator -configuration Debug"
+  end
+
+  desc 'Compiles the default target using the Debug configuration.'
+  task :compile_default_with_release_config => [:clean] do
+    puts 'Compiling App in Debug scheme'
+    sh "cd code/Teemo && #{XCODEBUILD_PATH} -sdk iphonesimulator -configuration Debug"
+  end  
+
   {{#targets}}
   desc 'Compiles the {{name}} target using the Debug configuration.'
-  task :compile_{{name}} => [:clean] do
+  task :compile_{{name}}_with_debug_config => [:clean] do
     puts 'Compiling App in Debug scheme'
     sh "cd code/Teemo && #{XCODEBUILD_PATH} -target {{name}} -sdk iphonesimulator -configuration Debug"
   end  
   
 
   desc 'Compiles the {{name}} target using the Release configuration.'
-  task :release_{{name}} => [:clean] do
+  task :compile_{{name}}_with_release_config => [:clean] do
     puts 'Compiling app for Release'
     sh "cd ./code/Teemo && #{XCODEBUILD_PATH} -target {{name}} -configuration Release"
   end
@@ -32,5 +44,3 @@ namespace :ios do
 
   {{/targets}}
  
-  
-  
