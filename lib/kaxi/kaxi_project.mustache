@@ -6,41 +6,40 @@ XCODEBUILD_PATH = '/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild
 
 task :default => 'ios:compile_default_with_debug_config'
 
-namespace :ios do
+namespace :kaxi do
   
   desc 'Deletes the compiled code.'
   task :clean do
     puts 'Cleaning previous builds'
     FileUtils.rm_rf('build')
-    sh "cd ./code/{{name}} && #{XCODEBUILD_PATH} -alltargets clean"
+    sh "#{XCODEBUILD_PATH} -alltargets clean"
   end   
 
   desc 'Compiles the default target using the Debug configuration.'
   task :compile_default_with_debug_config => [:clean] do
     puts 'Compiling App in Debug scheme'
-    sh "cd code/Teemo && #{XCODEBUILD_PATH} -sdk iphonesimulator -configuration Debug"
+    sh "#{XCODEBUILD_PATH} -sdk iphonesimulator -configuration Debug"
   end
 
   desc 'Compiles the default target using the Debug configuration.'
   task :compile_default_with_release_config => [:clean] do
     puts 'Compiling App in Debug scheme'
-    sh "cd code/Teemo && #{XCODEBUILD_PATH} -sdk iphonesimulator -configuration Debug"
+    sh "#{XCODEBUILD_PATH} -sdk iphonesimulator -configuration Debug"
   end  
 
   {{#targets}}
   desc 'Compiles the {{name}} target using the Debug configuration.'
   task :compile_{{name}}_with_debug_config => [:clean] do
     puts 'Compiling App in Debug scheme'
-    sh "cd code/Teemo && #{XCODEBUILD_PATH} -target {{name}} -sdk iphonesimulator -configuration Debug"
+    sh "#{XCODEBUILD_PATH} -target {{name}} -sdk iphonesimulator -configuration Debug"
   end  
   
 
   desc 'Compiles the {{name}} target using the Release configuration.'
   task :compile_{{name}}_with_release_config => [:clean] do
     puts 'Compiling app for Release'
-    sh "cd ./code/Teemo && #{XCODEBUILD_PATH} -target {{name}} -configuration Release"
+    sh "#{XCODEBUILD_PATH} -target {{name}} -configuration Release"
   end
-
-
   {{/targets}}
  
+ end

@@ -15,9 +15,19 @@ describe Kaxi do
 		project = Kaxi::Project.new
 		project_file_path = File.absolute_path( File.join( 'spec', 'fixtures', 'TestXcodeProject.xcodeproj' ) )		
 		project_info = project.xcode_project_info project_file_path
-		project_info.should_not be_nil
+		project_info.should_not be_nil		
+		project_info.targets.should_not be_nil
+	end
+
+	it "should create Rakefile with Kaxi script" do
+		project = Kaxi::Project.new
+		project_file_path = File.absolute_path( File.join( 'spec', 'fixtures', 'TestXcodeProject.xcodeproj' ) )		
+		project_info = project.xcode_project_info project_file_path		
 		script = Kaxi::KaxiScript.new
 		script.build_script_for( project_info, File.absolute_path( File.join( 'spec', 'fixtures' ) ) )	
-	end
+		expected_rakefile_path = File.absolute_path( File.join( 'spec', 'fixtures', 'Rakefile' ) )		
+		File.exists?(expected_rakefile_path).should be_true
+		File.delete expected_rakefile_path
+	end	
 
 end
